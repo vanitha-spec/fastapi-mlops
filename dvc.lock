@@ -1,0 +1,50 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python -m src.preprocess
+    deps:
+    - path: data/raw/dataset.csv
+      hash: md5
+      md5: 34c2ead62c353389adc7315739d44ab1
+      size: 977262
+    - path: src/preprocess.py
+      hash: md5
+      md5: 726caee42a15e31903383d268438befc
+      size: 1724
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 1dde996aa618ae4a659ea63652c1dc71
+      size: 145395
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 3441fbd24d3d7c2fcaa1694b71f6ecd6
+      size: 579962
+  train:
+    cmd: python -m src.train
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 1dde996aa618ae4a659ea63652c1dc71
+      size: 145395
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 3441fbd24d3d7c2fcaa1694b71f6ecd6
+      size: 579962
+    - path: src/feature_pipeline.py
+      hash: md5
+      md5: a781cb9e33141416dd6587483508b3ba
+      size: 518
+    - path: src/train.py
+      hash: md5
+      md5: 37284099b1d447b50cb63275bf9caadb
+      size: 3212
+    outs:
+    - path: models/best_model.pkl
+      hash: md5
+      md5: 922b982014824d8c11087c5afd1ccc3e
+      size: 7281
+    - path: models/metrics.json
+      hash: md5
+      md5: fb4f652acdf545c09a3bab326fa88cb5
+      size: 623
