@@ -1,0 +1,22 @@
+stages:
+  preprocess:
+    cmd: python -m src.preprocess
+    deps:
+      - data/raw/dataset.csv
+      - src/preprocess.py
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+
+  train:
+    cmd: python -m src.train
+    deps:
+      - data/processed/train.csv
+      - data/processed/test.csv
+      - src/train.py
+      - src/feature_pipeline.py
+    outs:
+      - models/best_model.pkl
+    metrics:
+      - models/metrics.json:
+          cache: false
